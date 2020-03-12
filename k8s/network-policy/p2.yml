@@ -1,0 +1,20 @@
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: deny-ping-c
+spec:
+  podSelector:
+    matchLabels:
+      app: ping-c
+  ingress: []
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: deny-ping-3
+spec:
+  podSelector:
+    matchLabels:
+      app: ping-3
+  ingress: []

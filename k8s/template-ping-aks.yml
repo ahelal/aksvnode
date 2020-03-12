@@ -1,0 +1,40 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ${APP_NAME}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ${APP_NAME}
+  template:
+    metadata:
+      labels:
+        app: ${APP_NAME}
+    spec:
+      containers:
+      - name: ${APP_NAME}
+        image: ${DOCKER_URL}/ping
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+        env:
+          - name: APP_NAME
+            value: "${APP_NAME}"
+          - name: APP_PORT
+            value: "80"
+          - name: APP_SERVICES
+            value: "${APP_SERVICES}"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ${APP_NAME}
+spec:
+  selector:
+    app: ${APP_NAME}
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      port: 80
